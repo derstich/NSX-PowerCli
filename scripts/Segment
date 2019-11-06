@@ -1,7 +1,7 @@
 #Variables for NSX Manager Connection
-$nsxmanagerip = "172.24.10.31"
-$nsxuser = "admin"
-$nsxpasswd = "VMware1!VMware1!"
+$nsxmanagerip = "{NSX Manager IP}"
+$nsxuser = "{NSX Username}"
+$nsxpasswd = "{NSX Password}"
 
 #General Variables
 $tag = "powercli"
