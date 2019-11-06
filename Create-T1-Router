@@ -1,0 +1,31 @@
+#Variables for NSX Manager Connection
+$nsxmanagerip = "{NSX Manager IP}"
+$nsxuser = "{NSX Username}"
+$nsxpasswd = "{NSX Password}"
+
+#General Variables
+$tag = "powercli"
+$scope = "deployment"
+
+#Variables for T1 Router
+$t1routerid = "{T1 Router Name}"
+$t1routerpath_to_t0_rtr = "/infra/tier-0s/{T0 Router Name}"
+
+#Connect to NSX Manager
+Connect-NsxtServer -Server $nsxmanagerip -User $nsxuser -Password $nsxpasswd
+
+#Retrieve Router Information
+$t1rtsvc = Get-NsxtPolicyService -Name com.vmware.nsx_policy.infra.tier1s
+
+#Set Variables
+$t1rtrspec = $t1rtsvc.Help.patch.tier1.Create()
+$t1rtrspec.id = $t1routerid
+$t1rtrspec.display_name = $t1routerid
+$t1rtrspec.tier0_path = $t1routerpath_to_t0_rtr
+#Add Tag to the Router
+$t1rtrtag = $t1rtsvc.Help.patch.tier1.tags.Element.Create()
+$t1rtrtag.scope = $scope
+$t1rtrtag.tag = $tag
+$t1rtrspec.tags.Add($t1rtrtag) | Out-Null
+#Create T1 Router
+$t1rtsvc.patch($t1rtrspec.id, $t1rtrspec)
