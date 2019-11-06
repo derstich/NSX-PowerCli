@@ -8,18 +8,18 @@ $tag = "powercli"
 $scope = "deployment"
 
 #Variables for Segment
-$segmentid = "segment1"
+$segmentid = "{Segment ID}"
 $transportzone = "/infra/sites/default/enforcement-points/default/transport-zones/{Transport Zone UUID}"
-$path_to_t1_rtr = "/infra/tier-1s/{T1 Router Name}"
-$defaultgateway = "{IP Address with Mask (eg. /24)}"
+$path_to_t1_rtr = "/infra/tier-1s/{T1 Router}"
+$defaultgateway = "{Default Gateway with Subnet (e.g./24)}"
 
 #Connect to NSX Manager
 Connect-NsxtServer -Server $nsxmanagerip -User $nsxuser -Password $nsxpasswd
 
 #Retrieve Segment Information
 $segmsvc = Get-NsxtPolicyService -Name com.vmware.nsx_policy.infra.segments
-
 #Set Variables
+$segmsvc = Get-NsxtPolicyService -Name com.vmware.nsx_policy.infra.segments
 $segmspec = $segmsvc.Help.patch.segment.Create()
 $segmspec.id = $segmentid
 $segmspec.transport_zone_path = $transportzone
@@ -28,10 +28,10 @@ $segmspec.connectivity_path = $path_to_t1_rtr
 $subnetSpec = $segmsvc.help.patch.segment.subnets.Element.Create()
 $subnetSpec.gateway_address = $defaultgateway
 $segmspec.subnets.Add($subnetSpec) | Out-Null
-#Add Tags to the segment
+#Add Tag to the Segment
 $segmtag = $segmsvc.help.patch.segment.tags.Element.Create()
 $segmtag.scope = $scope
 $segmtag.tag = $tag
 $segmspec.tags.Add($segmtag) | Out-Null
 #Create Segment
-$segmsvc.patch($segmentid, $segmspec)
+$segmsvc.patch($item.Name, $segmspec)
