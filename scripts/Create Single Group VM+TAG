@@ -13,7 +13,7 @@ $groupid = "{Group Name}"
 $groupmember = "{Scope}|{Tag}"
 
 #Connect to NSX Manager
-#Connect-NsxtServer -Server $nsxmanagerip -User $nsxuser -Password $nsxpasswd
+Connect-NsxtServer -Server $nsxmanagerip -User $nsxuser -Password $nsxpasswd
 
 #Retrieve Group Information
 $groupsvc = Get-NsxtPolicyService -Name com.vmware.nsx_policy.infra.domains.groups
