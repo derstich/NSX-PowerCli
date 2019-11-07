@@ -1,0 +1,42 @@
+#Variables for NSX Manager Connection
+$nsxmanagerip = "172.24.10.31"
+$nsxuser = "admin"
+$nsxpasswd = "VMware1!VMware1!"
+
+#General Variables
+$tag = "powercli"
+$scope = "deployment"
+
+#Variables for Groups
+$groupdomain = "default"
+$groupid = "group1"
+$groupmember = "test1|test2"
+
+#Connect to NSX Manager
+#Connect-NsxtServer -Server $nsxmanagerip -User $nsxuser -Password $nsxpasswd
+
+#Retrieve Group Information
+$groupsvc = Get-NsxtPolicyService -Name com.vmware.nsx_policy.infra.domains.groups
+
+#Set Group Variables
+$groupspec = $groupsvc.Help.patch.group.Create()
+$groupspec.display_name = $groupid
+$groupidspec = $groupsvc.Help.patch.group_id.Create()
+$groupidspec = $groupid
+
+#Add Group Member Variables
+$groupspecexp = $groupsvc.Help.patch.group.expression.Element.condition.Create()
+$groupspecexp.member_type = "VirtualMachine"
+$groupspecexp.value = $groupmember
+$groupspecexp.key = "Tag" 
+$groupspecexp.operator = "EQUALS"
+$groupspec.expression.Add($groupspecexp) | Out-Null
+
+#Add TAG to Group
+$grouptag = $groupsvc.Help.patch.group.tags.Element.Create()  
+$grouptag.scope = "deployment"
+$grouptag.tag = "PowerCLI"
+$groupspec.tags.Add($grouptag) | Out-Null
+
+#Create Group
+$groupsvc.patch($groupdomainspec, $groupidspec, $groupspec)
