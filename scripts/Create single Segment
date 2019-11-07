@@ -18,20 +18,24 @@ Connect-NsxtServer -Server $nsxmanagerip -User $nsxuser -Password $nsxpasswd
 
 #Retrieve Segment Information
 $segmsvc = Get-NsxtPolicyService -Name com.vmware.nsx_policy.infra.segments
+
 #Set Variables
 $segmsvc = Get-NsxtPolicyService -Name com.vmware.nsx_policy.infra.segments
 $segmspec = $segmsvc.Help.patch.segment.Create()
 $segmspec.id = $segmentid
 $segmspec.transport_zone_path = $transportzone
 $segmspec.connectivity_path = $path_to_t1_rtr
+
 #Set Default Gateway Variables
 $subnetSpec = $segmsvc.help.patch.segment.subnets.Element.Create()
 $subnetSpec.gateway_address = $defaultgateway
 $segmspec.subnets.Add($subnetSpec) | Out-Null
+
 #Add Tag to the Segment
 $segmtag = $segmsvc.help.patch.segment.tags.Element.Create()
 $segmtag.scope = $scope
 $segmtag.tag = $tag
 $segmspec.tags.Add($segmtag) | Out-Null
+
 #Create Segment
 $segmsvc.patch($item.Name, $segmspec)
