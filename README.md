@@ -1,3 +1,12 @@
 # NSXT-PowerCli-on-Policy-API
-Basic Scripts to create NSX-T Objects in the Policy API with PowerCli
+This is a repository for PowerCLI Scripts to configure Objects in the Simplified UI (Policy API)from NSX-T 2.4 and above.
+
+For general information about PowerCLI and Powershell, visit the official websites and the GitHub project pages.
+
+These Scripts are currently not supported and you should ask your VMware representive if you would like to use the scripts in as production enviroment.
+
+# Install PowerCLI
+
+fsdfd
+
 
