@@ -22,10 +22,12 @@ $t1rtrspec = $t1rtsvc.Help.patch.tier1.Create()
 $t1rtrspec.id = $t1routerid
 $t1rtrspec.display_name = $t1routerid
 $t1rtrspec.tier0_path = $t1routerpath_to_t0_rtr
+
 #Add Tag to the Router
 $t1rtrtag = $t1rtsvc.Help.patch.tier1.tags.Element.Create()
 $t1rtrtag.scope = $scope
 $t1rtrtag.tag = $tag
 $t1rtrspec.tags.Add($t1rtrtag) | Out-Null
+
 #Create T1 Router
 $t1rtsvc.patch($t1rtrspec.id, $t1rtrspec)
