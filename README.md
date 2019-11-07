@@ -1,5 +1,5 @@
 # NSXT-PowerCli-on-Policy-API
-This is a repository for PowerCLI Scripts to configure Objects in the Simplified UI (Policy API)from NSX-T 2.4 and above.
+This is a repository for PowerCLI Scripts to configure Objects in the Simplified UI (Policy API) from VMware NSX-T 2.4 and above.
 
 For general information about PowerCLI and Powershell, visit the official websites and the GitHub project pages.
 
